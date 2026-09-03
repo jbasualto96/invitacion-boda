@@ -12,7 +12,7 @@ video{width:100%;height:100%;object-fit:contain;background:#fff}
 </style>
 </head>
 <body>
-<video id="v" autoplay muted playsinline preload="auto">
+<video id="v" playsinline preload="auto">
   <source src="sobre.mp4" type="video/mp4">
 </video>
 <button id="start" type="button">Pulsa para abrir la invitación</button>
@@ -25,8 +25,7 @@ function tryPlay(){
   const p=v.play();
   if(p && p.catch){p.catch(()=>{start.style.display='flex';});}
 }
-start.addEventListener('click',()=>{start.style.display='none';v.play();});
-window.addEventListener('load',tryPlay);
+start.addEventListener('click',()=>{start.style.display='none';v.muted=false;v.volume=1;v.currentTime=0;v.play();});window.addEventListener('load',tryPlay);
 </script>
 </body>
 </html>
