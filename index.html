@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Javiera & Jorge</title>
+<style>
+html,body{margin:0;width:100%;height:100%;background:#fff;overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+video{width:100%;height:100%;object-fit:contain;background:#fff}
+#start{position:fixed;inset:0;border:0;background:#fff;font:18px system-ui;color:#333;display:none;align-items:center;justify-content:center;cursor:pointer}
+</style>
+</head>
+<body>
+<video id="v" autoplay muted playsinline preload="auto">
+  <source src="sobre.mp4" type="video/mp4">
+</video>
+<button id="start" type="button">Pulsa para abrir la invitación</button>
+<script>
+const destination='https://javierayjorge.my.canva.site/copia-de-javiera-jorge';
+const v=document.getElementById('v');
+const start=document.getElementById('start');
+v.addEventListener('ended',()=>location.replace(destination));
+function tryPlay(){
+  const p=v.play();
+  if(p && p.catch){p.catch(()=>{start.style.display='flex';});}
+}
+start.addEventListener('click',()=>{start.style.display='none';v.play();});
+window.addEventListener('load',tryPlay);
+</script>
+</body>
+</html>
