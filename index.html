@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Javiera & Jorge</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;width:100%;height:100%;
+    background:#fff;overflow:hidden
+  }
+
+  #video,#poster{
+    position:fixed;inset:0;
+    width:100%;height:100%;
+    object-fit:contain;
+    background:#fff
+  }
+
+  #poster{z-index:5}
+
+  #cover{
+    position:fixed;inset:0;z-index:10;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    border:0;background:transparent;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  #brand{
+    position:absolute;
+    top:max(5vh, calc(env(safe-area-inset-top) + 20px));
+    left:50%;
+    transform:translateX(-50%);
+    width:min(48vw, 245px);
+    height:auto;
+    filter:drop-shadow(0 1px 5px rgba(255,255,255,.75));
+  }
+
+  #openText{
+    position:absolute;
+    bottom:max(7vh, calc(env(safe-area-inset-bottom) + 24px));
+    left:50%;
+    transform:translateX(-50%);
+    white-space:nowrap;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:2.1px;
+    color:#222;
+    background:rgba(255,255,255,.82);
+    padding:11px 16px 10px;
+    border-radius:999px;
+    backdrop-filter:blur(5px);
+    -webkit-backdrop-filter:blur(5px);
+    box-shadow:0 2px 12px rgba(0,0,0,.06);
+  }
+
+  #cover.hide{
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease;
+  }
+
+  #fade{
+    position:fixed;inset:0;z-index:20;
+    background:#fff;opacity:0;
+    pointer-events:none;
+    transition:opacity .8s ease
+  }
+  #fade.on{opacity:1}
+</style>
+</head>
+
+<body>
+  <video id="video" playsinline preload="auto">
+    <source src="sobre.mp4" type="video/mp4">
+  </video>
+
+  <img id="poster" src="portada-sobre.jpg" alt="">
+
+  <button id="cover" type="button" aria-label="Abrir invitación">
+    <img id="brand" src="logo.png" alt="Javiera y Jorge">
+    <span id="openText">PULSA PARA ABRIR</span>
+  </button>
+
+  <div id="fade"></div>
+
+<script>
+  const DESTINO = "https://javierayjorge.my.canva.site/copia-de-javiera-jorge";
+
+  const v = document.getElementById("video");
+  const poster = document.getElementById("poster");
+  const cover = document.getElementById("cover");
+  const fade = document.getElementById("fade");
+
+  cover.addEventListener("click", async () => {
+    v.muted = false;
+    v.volume = 1;
+    v.currentTime = 0;
+
+    try {
+      await v.play();
+      poster.style.display = "none";
+      cover.classList.add("hide");
+      setTimeout(() => { cover.style.display = "none"; }, 190);
+    } catch (e) {
+      cover.classList.remove("hide");
+    }
+  });
+
+  v.addEventListener("ended", () => {
+    fade.classList.add("on");
+    setTimeout(() => {
+      window.location.replace(DESTINO);
+    }, 820);
+  });
+</script>
+</body>
+</html>
